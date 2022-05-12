@@ -8,12 +8,14 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("author_id")->unique();
+            $table->text("content");
 
-            $table->foreign("author_id")->references("id")->on("authors")->onDelete("CASCADE");
+            $table->unsignedBigInteger("blog_post_id")->index();
+
+            $table->foreign("blog_post_id")->references("id")->on("blog_posts")->onDelete("CASCADE");
 
             $table->timestamps();
         });
@@ -21,6 +23,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('comments');
     }
 };

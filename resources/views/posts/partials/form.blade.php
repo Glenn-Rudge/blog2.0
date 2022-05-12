@@ -23,6 +23,5 @@
 @endif
 <!-- Submit button -->
 <button type="submit" class="btn btn-primary btn-block mb-4">
-{{--    {{ Route::currentRouteName() === "posts.create" ? "Create" : "Update" }}--}}
-    update
+    {{ Route::currentRouteName() === "posts.create" ? "Create" : "Update" }}
 </button>
