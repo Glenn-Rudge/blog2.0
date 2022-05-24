@@ -2,7 +2,7 @@
 @section("title", "Blog Posts")
 
 @section("content")
-    @forelse($posts as $key => $post)
+    @forelse($posts as $post)
         @include("posts.partials.post")
     @empty
         No Posts

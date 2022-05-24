@@ -9,21 +9,17 @@
 
     class PostController extends Controller
     {
-        public function index ()
+        public function index (Request $request)
         {
-            DB::connection()->enableQueryLog();
+            if ($request->has("client-search")) {
+                $clientSearch = $request->input("client-search");
 
-            $posts = BlogPost::with("comments")->get();
+                $posts = BlogPost::where("title", "like", "%{$clientSearch}%")->get();
 
-            foreach($posts as $post) {
-                foreach ($post->comments as $comment) {
-                    echo $comment->content;
-                }
+                return view("posts.index", ["posts" => $posts]);
             }
 
-            dd(DB::getQueryLog());
-
-            return view("posts.index", ["posts" => BlogPost::all()]);
+            return view("posts.index", ["posts" => BlogPost::withCount("comments")->get()]);
         }
 
         public function create ()
@@ -75,6 +71,6 @@
 
             $request->session()->flash("status", "Blog post deleted successfully");
 
-            return redirect()->route("posts.index");
+            return redirect()->route("dashboard");
         }
     }

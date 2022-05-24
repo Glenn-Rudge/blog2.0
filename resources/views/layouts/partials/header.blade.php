@@ -13,8 +13,12 @@
     <!-- Material Design Bootstrap -->
     <link href="{{ asset("css/mdb.min.css") }}" rel="stylesheet">
     <!-- Your custom scripts -->
-    <style type="text/css">
-
+    <style>
+        @media only screen and (max-width: 600px) {
+            #search-form {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -34,7 +38,9 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent-4">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown ml-4 mb-0">
-                        <a href="{{ route("home.index") }}" class="nav-link waves-effect waves-light font-weight-bold">HYPER WEB DEVELOPMENT</a>
+                        {{--                        <a href="{{ route("home.index") }}" class="nav-link waves-effect waves-light font-weight-bold navbar-brand">--}}
+                        {{--                            <img width="50px" src="{{ asset("images/logo.png") }}" alt="logo"/>--}}
+                        {{--                        </a>--}}
                         {{--                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">--}}
                         {{--                            <a class="dropdown-item waves-effect waves-light" href="../homepage/v-1.html">V1</a>--}}
                         {{--                            <a class="dropdown-item waves-effect waves-light" href="../homepage/v-2.html">V2</a>--}}
@@ -61,28 +67,56 @@
                            class="nav-link waves-effect waves-light font-weight-bold">CONTACT
                         </a>
                     </li>
+                    <li class="nav-item ml-4 mb-0">
+                        <a href=""
+                           class="nav-link waves-effect waves-light font-weight-bold">
+{{--                                                        {{ strtoupper(Auth::user()->first_name) }}--}}
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown ml-4 mb-0">
+                        @auth
+                            <a class="nav-link dropdown-toggle waves-effect waves-light font-weight-bold"
+                               id="navbarDropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false"> {{ Auth::user()->first_name }}
+                            </a>
+                        @else
+                            <a href="{{ route("login") }}" class="nav-link waves-effect waves-light font-weight-bold">
+                                LOGIN
+                            </a>
+                        @endauth
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item waves-effect waves-light"
+                               href="{{ route("dashboard") }}">DASHBOARD</a>
+                            <form method="POST" action="{{ route("logout") }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item waves-effect waves-light">LOGOUT</button>
+                            </form>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent-4">
                 <ul class="navbar-nav ml-auto nav-flex-icons">
-                    <li class="nav-item dropdown ml-4  mb-0">
-                        <a href="{{ route("posts.create") }}"
-                           class="nav-link waves-effect waves-light font-weight-bold">
-                            CREATE POST
-                        </a>
+                    <li class="nav-item dropdown mb-0">
+                        <form id="search-form" class="input-group" action="{{ route("posts.index") }}" method="GET">
+                            <input aria-label="Search" class="form-control rounded" name="client-search" type="search"
+                                   placeholder="Search posts...">
+                            <button class="btn btn-outline-primary my-auto " type="submit">Search</button>
+                        </form>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-sm-block">
                         <a target="_blank" href="https://www.linkedin.com/in/glenn-rudge/"
                            class="nav-link waves-effect waves-light">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-sm-block">
                         <a class="nav-link waves-effect waves-light">
                             <i class="fab fa-github"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-sm-block">
                         <a target="_blank" href="https://stackshare.io/glenn-rudge"
                            class="nav-link waves-effect waves-light">
                             <span class="text-sm">stackshare.io</span>

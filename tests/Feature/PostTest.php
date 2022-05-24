@@ -3,6 +3,7 @@
     namespace Tests\Feature;
 
     use App\Models\BlogPost;
+    use App\Models\Comment;
     use Illuminate\Foundation\Testing\RefreshDatabase;
     use Tests\TestCase;
     use App\Http\Middleware as Middleware;
@@ -11,11 +12,22 @@
     {
         use RefreshDatabase;
 
-        public function test_no_blog_posts_when_nothing_in_database ()
+        public function test_no_blog_posts_when_nothing_in_database_with_no_comments ()
         {
             $response = $this->get("/posts");
 
             $response->assertSeeText("No Posts");
+        }
+
+        public function test_see_one_blog_post_when_there_is_one_with_comments()
+        {
+            $post = $this->createDummyBlogPost();
+
+            Comment::factory()->count(4)->create(["blog_post_id" => $post->id]);
+
+            $response = $this->get("/posts");
+
+            $response->assertSeeText("Comments: 4");
         }
 
         public function test_see_one_blog_post_when_there_is_one ()
@@ -25,6 +37,7 @@
             $response = $this->get("/posts");
 
             $response->assertSeeText("new title");
+            $response->assertSeeText("No comments");
 
             $this->assertDatabaseHas("blog_posts", [
                 "title" => "new title",
@@ -112,13 +125,7 @@
 
         private function createDummyBlogPost ()
         {
-            $post = new BlogPost();
-
-            $post->title = "new title";
-
-            $post->content = "new content";
-
-            $post->save();
+            $post = BlogPost::factory()->newTitleAndContent()->create();
 
             return $post;
         }
