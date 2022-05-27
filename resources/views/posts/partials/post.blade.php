@@ -1,6 +1,5 @@
 <!-- Grid row -->
 <div class="row">
-
     <!-- Grid column -->
     <div class="col-lg-5 mb-4">
         <!-- Featured image -->
@@ -15,42 +14,9 @@
     <!-- Grid column -->
 
     <!-- Grid column -->
-    <div class="col-lg-6 ml-xl-4 mb-4">
-        <!-- Grid row -->
-        <div class="row">
-            <p class="text-sm">Tags:</p>
-            <!-- Grid column -->
-            <div class="col-xl-2 col-md-6 text-sm-center text-md-right text-lg-left">
-                <p class="orange-text font-small font-weight-bold mb-1 spacing">
-                    <a>
-                        <strong>DESIGN</strong>
-                    </a>
-                </p>
-            </div>
-            <!-- Grid column -->
-
-            <!-- Grid column -->
-            <div class="col-xl-5 col-md-6 text-sm-center text-md-left">
-                <p class="pl-md-5 font-small grey-text">
-                    <em>{{ \Carbon\Carbon::parse($post->created_at)->toFormattedDateString()}}</em>
-                        @if($post->comments_count)
-                        <em>Comments: {{ $post->comments_count }}</em>
-                        @else
-                            <em>No comments</em>
-                        @endif
-                    <em>
-                @if(now()->diffInMinutes($post->created_at) < 5)
-                    <p>New Post</p>
-                    @endif
-                    </em>
-                    </p>
-            </div>
-            <!-- Grid column -->
-
-        </div>
-        <!-- Grid row -->
-
+    <div class="col-lg-6 mb-4">
         <h4 class="mb-3 dark-grey-text mt-0">
+            <p class="">Written by: {{ $post->user->first_name }} on {{ \Carbon\Carbon::parse($post->created_at)->toFormattedDateString()}}</p>
             <strong>
                 <a href="{{ route("posts.show", $post->id) }}">{{ $post->title }}</a>
             </strong>

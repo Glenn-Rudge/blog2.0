@@ -9,18 +9,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('blog_posts', function (Blueprint $table) {
-            $table->unsignedBigInteger("user_id")->after("id");
-
-            $table->foreign("user_id")->references("id")->on("users");
+            $table->softDeletes();
         });
     }
 
     public function down()
     {
         Schema::table('blog_posts', function (Blueprint $table) {
-            $table->dropForeign("blog_posts_user_id_foreign");
-
-            $table->dropColumn("user_id");
+            $table->dropSoftDeletes();
         });
     }
 };

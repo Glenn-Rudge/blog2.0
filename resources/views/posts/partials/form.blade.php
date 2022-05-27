@@ -21,6 +21,7 @@
         </ul>
     </div>
 @endif
+<input type="hidden" name="user_id" />
 <!-- Submit button -->
 <button type="submit" class="btn btn-primary btn-block mb-4">
     {{ Route::currentRouteName() === "posts.create" ? "Create" : "Update" }}

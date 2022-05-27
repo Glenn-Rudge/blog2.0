@@ -150,7 +150,7 @@
 
     // MDB Lightbox Init
     $(function () {
-        $("#mdb-lightbox-ui").load({{ asset("mdb-addons/mdb-lightbox-ui.html") }});
+        $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
     });
 
 </script>

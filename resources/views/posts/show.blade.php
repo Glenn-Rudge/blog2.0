@@ -7,15 +7,6 @@
         <section>
             <div class="container-fluid">
                 {{--                <img src="https://mdbootstrap.com/img/Photos/Others/nature3.jpg" class="img-fluid" alt="First sample image">--}}
-                <div class="d-flex">
-                    <a role="button" class="btn btn-info" href="{{ route("posts.edit", $post->id) }}">Update</a>
-                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                        @csrf
-                        @method("DELETE")
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
-                <br>
                 <h1 class="text-center dark-grey-text pb-3 pt-5 wow fadeIn" data-wow-delay="0.2s">
                     <strong> {{ $post->title }} </strong>
                 </h1>
