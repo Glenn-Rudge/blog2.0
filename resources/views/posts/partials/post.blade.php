@@ -21,11 +21,8 @@
                 <a href="{{ route("posts.show", $post->id) }}">{{ $post->title }}</a>
             </strong>
         </h4>
-        <p class="dark-grey-text">Nam libero tempore, cum soluta nobis est eligendi optio cumque
-            nihil impedit
-            quo minus
-            id vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-            praesentium.
+        <p class="dark-grey-text">
+            {{ \Illuminate\Support\Str::limit($post->content, 275, "...") }}
         </p>
 
         <!-- Deep-orange -->
