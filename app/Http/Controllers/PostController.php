@@ -82,57 +82,14 @@
 
         public function show($id)
         {
-            $post = Cache::tags(["blog-post"])->remember("blog-post-{$id}", now()->addSeconds(30),
+            $post = Cache::remember("blog-post-{$id}", now()->addSeconds(30),
                 function () use ($id) {
                     return BlogPost::with("comments")->findOrFail($id);
                 });
-
-            $sessionId = session()->getId();
-
-            $counterKey = "blog-post-{$id}-counter";
-
-            $userKey = "blog-post-{$id}-user";
-
-            $users = Cache::tags(["blog-post"])->get($userKey, []);
-
-            $usersUpdate = [];
-
-            $difference = 0;
-
-            $counter = 0;
-
-            $now = now();
-
-            foreach ($users as $session => $lastVisit) {
-                if ($now->diffInMinutes($lastVisit) >= 1) {
-                    $difference--;
-                } else {
-                    $usersUpdate[$session] = $lastVisit;
-                }
-            }
-
-            if (
-                !array_key_exists($sessionId, $users)
-                || $now->diffInMinutes($users[$sessionId]) >= 1
-            ) {
-                $difference++;
-            }
-
-            $usersUpdate[$sessionId] = $now;
-
-            Cache::tags(["blog-post"])->forever($userKey, $usersUpdate);
-
-            if (!Cache::has($counterKey)) {
-                Cache::tags(["blog-post"])->forever($counterKey, 1);
-            } else {
-                Cache::tags(["blog-post"])->increment($counterKey, $difference);
-            }
-
-            $counter = Cache::tags(["blog-post"])->get($counterKey);
-
+            
             return view("posts.show", [
                 "post" => $post,
-                "counter" => $counter
+//                "counter" => $counter
             ]);
         }
 

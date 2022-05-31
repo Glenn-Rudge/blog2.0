@@ -2,7 +2,12 @@
 <div class="row">
     <!-- Grid column -->
     <div class="col-lg-5 mb-4">
-        <!-- Featured image -->
+        @foreach($post->tags as $tag)
+            <span class="my-2 badge badge-primary">
+                {{ $tag->name }}
+            </span>
+    @endforeach
+    <!-- Featured image -->
         <div class="view overlay z-depth-1">
             <img src="https://mdbootstrap.com/img/Photos/Others/photo9.jpg" class="img-fluid"
                  alt="First sample image">

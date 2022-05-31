@@ -6,6 +6,11 @@
         <!-- Intro -->
         <section>
             <div class="container-fluid">
+                @foreach($post->tags as $tag)
+                    <a href="{{ route('posts.tags.index', ['tag' => $tag->id]) }}" class="my-2 badge badge-primary">
+                        {{ $tag->name }}
+                    </a>
+                @endforeach
                 {{--                <img src="https://mdbootstrap.com/img/Photos/Others/nature3.jpg" class="img-fluid" alt="First sample image">--}}
                 <h1 class="text-center dark-grey-text pb-3 pt-5 wow fadeIn" data-wow-delay="0.2s">
                     <strong> {{ $post->title }} </strong>
@@ -15,7 +20,7 @@
                     post description
                 </p>
                 <p class="grey-text text-center mb-4 text-uppercase spacing wow fadeIn" data-wow-delay="0.2s">
-                    Currently being read by {{ $counter }} people.
+                    Currently being read by $count people.
                 </p>
             </div>
         </section>
