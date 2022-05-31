@@ -1,6 +1,7 @@
 <?php
 
     use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\PostCommentController;
     use App\Http\Controllers\PostController;
     use App\Http\Controllers\PostTagController;
     use App\Models\BlogPost;
@@ -17,6 +18,9 @@
     })->middleware(["auth"])->name("dashboard");
 
     Route::resource("posts", PostController::class);
+
+    Route::resource("posts.comments", PostCommentController::class);
+
 
     Route::get("/posts/tag/{tag}", [PostTagController::class, "index"])->name("posts.tags.index");
 

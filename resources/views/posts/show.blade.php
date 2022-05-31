@@ -251,100 +251,100 @@
                                         <!-- Comments -->
                                         <hr>
                                         <!-- Section: Leave a reply (Not Logged In User) -->
-                                        <section class="mb-4 wow fadeIn" data-wow-delay="0.2s">
-                                            <h3 class="font-weight-bold text-center my-5">Leave a reply</h3>
+                                        @auth
+                                            <section class="mb-4 wow fadeIn" data-wow-delay="0.2s">
+                                                <div>
+                                                    @if($errors->any)
+                                                        @foreach($errors->all() as $error)
+                                                            <div class="alert alert-primary" role="alert">
+                                                                {{ $error }}
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <form method="POST">
+                                                    @csrf
+                                                    <h3 class="font-weight-bold text-center my-5">Leave a reply</h3>
 
-                                            <!-- Grid row -->
-                                            <div class="row">
+                                                    <!-- Grid row -->
+                                                    <div class="row">
 
-                                                <!-- Grid column -->
-                                                <div class="col-lg-4 col-md-12 mb-4">
+                                                        <!-- Grid column -->
+                                                        <div class="col-lg-6 col-md-12 mb-4">
 
-                                                    <div class="input-group md-form form-sm form-3 pl-0">
-                                                        <div class="input-group-prepend">
-                                                        <span class="input-group-text white black-text"
-                                                              id="basic-addon8">1</span>
+                                                            <div class="input-group md-form form-sm form-3 pl-0">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text white black-text"
+                                                                          id="basic-addon8">Name</span>
+                                                                </div>
+                                                                <input type="text"
+                                                                       class="form-control mt-0 black-border rgba-white-strong"
+                                                                       placeholder="{{ auth()->user() ? auth()->user()->first_name : "Sign up for an account to leave a comment" }}"
+                                                                       aria-describedby="basic-addon9"
+                                                                       disabled
+                                                                >
+                                                            </div>
+
                                                         </div>
-                                                        <input type="text"
-                                                               class="form-control mt-0 black-border rgba-white-strong"
-                                                               placeholder="Name" aria-describedby="basic-addon9">
-                                                    </div>
+                                                        <!-- Grid column -->
 
-                                                </div>
-                                                <!-- Grid column -->
+                                                        <!-- Grid column -->
+                                                        <div class="col-lg-6 col-md-6 mb-4">
+                                                            <div class="input-group md-form form-sm form-3 pl-0">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text white black-text"
+                                                                          id="basic-addon10">Credits</span>
+                                                                </div>
+                                                                <input type="number"
+                                                                       class="form-control mt-0 black-border rgba-white-strong"
+                                                                       placeholder="0"
+                                                                       aria-describedby="basic-addon9"
+                                                                       disabled>
+                                                            </div>
 
-                                                <!-- Grid column -->
-                                                <div class="col-lg-4 col-md-6 mb-4">
-
-                                                    <div class="input-group md-form form-sm form-3 pl-0">
-                                                        <div class="input-group-prepend">
-                                                        <span class="input-group-text white black-text"
-                                                              id="basic-addon9">2</span>
                                                         </div>
-                                                        <input type="text"
-                                                               class="form-control mt-0 black-border rgba-white-strong"
-                                                               placeholder="Email" aria-describedby="basic-addon9">
+                                                        <!-- Grid column -->
                                                     </div>
+                                                    <!-- Grid row -->
+                                                    <!-- Grid row -->
+                                                    <div class="row">
 
-                                                </div>
-                                                <!-- Grid column -->
-
-                                                <!-- Grid column -->
-                                                <div class="col-lg-4 col-md-6 mb-4">
-
-                                                    <div class="input-group md-form form-sm form-3 pl-0">
-                                                        <div class="input-group-prepend">
-                                                        <span class="input-group-text white black-text"
-                                                              id="basic-addon10">3</span>
-                                                        </div>
-                                                        <input type="text"
-                                                               class="form-control mt-0 black-border rgba-white-strong"
-                                                               placeholder="Website" aria-describedby="basic-addon9">
-                                                    </div>
-
-                                                </div>
-                                                <!-- Grid column -->
-
-                                            </div>
-                                            <!-- Grid row -->
-
-                                            <!-- Grid row -->
-                                            <div class="row">
-
-                                                <div class="col-12 mt-1">
-                                                    <div class="form-group basic-textarea rounded-corners">
-
-                            <textarea class="form-control" id="exampleFormControlTextarea6" rows="5"
-                                      placeholder="Write something here..."></textarea>
-                                                    </div>
-
-                                                    <div class="text-right">
-                                                        <button class="btn btn-grey btn-sm">Submit</button>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                            <!-- Grid row -->
-
-                                        </section>
-                                        <!-- Section: Leave a reply (Not Logged In User) -->
-
+                                                        <div class="col-12 mt-1">
+                                                            <div class="form-group basic-textarea rounded-corners">
+                                                                <textarea class="form-control"
+                                                                          id="exampleFormControlTextarea6" rows="5"
+                                                                          placeholder="Write something here..."></textarea>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button type="submit" class="btn btn-grey btn-block">
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                </form>
                                     </div>
-                                    <!-- Grid column -->
 
                                 </div>
                                 <!-- Grid row -->
 
                             </section>
-                            <!-- Section: Blog v.3 -->
+                            <!-- Section: Leave a reply (Not Logged In User) -->
 
                         </div>
-                        <!-- Main listing -->
-                    </div>
-                    <!-- Blog -->
+                        <!-- Grid column -->
 
-                </div>
+                    </div>
+                    <!-- Grid row -->
+
+        </section>
+    @endauth
+    <!-- Section: Blog v.3 -->
+
+        </div>
+        <!-- Main listing -->
+        </div>
+        <!-- Blog -->
+
+        </div>
         </section>
     </main>
     <!-- Main layout -->
