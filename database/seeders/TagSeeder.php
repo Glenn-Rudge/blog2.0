@@ -1,19 +1,25 @@
 <?php
 
-namespace Database\Seeders;
+    namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
+    use App\Models\Tag;
+    use Illuminate\Database\Seeder;
 
-class TagSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    class TagSeeder extends Seeder
     {
-        //
+        /**
+         * Run the database seeds.
+         *
+         * @return void
+         */
+        public function run()
+        {
+            $tags = collect(["Science", "Sports", "Politics", "Entertainment", "Economy"]);
+
+            $tags->each(function ($tagName) {
+                $tag = new Tag;
+                $tag->name = $tagName;
+                $tag->save();
+            });
+        }
     }
-}

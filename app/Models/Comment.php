@@ -22,6 +22,11 @@
             return $this->belongsTo(BlogPost::class, "blog_post_id", "id");
         }
 
+        public function user(): BelongsTo
+        {
+            return $this->belongsTo(User::class);
+        }
+
         public static function boot()
         {
             parent::boot();

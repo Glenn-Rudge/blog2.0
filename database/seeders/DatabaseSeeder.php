@@ -20,6 +20,10 @@
                 UserSeeder::class,
                 BlogPostSeeder::class,
                 CommentSeeder::class,
+                TagSeeder::class,
+                BlogPostTagSeeder::class,
             ]);
         }
     }
+
+    TODO:// Fix default db:seed duplicate entry for john@example.com.
