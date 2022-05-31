@@ -1,35 +1,36 @@
 <?php
 
-namespace Database\Factories;
+    namespace Database\Factories;
 
-use App\Models\BlogPost;
-use App\Models\Comment;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
+    use App\Models\BlogPost;
+    use App\Models\Comment;
+    use App\Models\User;
+    use Illuminate\Database\Eloquent\Factories\Factory;
 
-class BlogPostFactory extends Factory
-{
-    public function configure()
+    class BlogPostFactory extends Factory
     {
-        return $this->afterCreating(function (BlogPost $post) {
-            $post->comments()->save(Comment::factory()->make());
-        });
-    }
+        public function configure()
+        {
+            return $this->afterCreating(function (BlogPost $post) {
+                $post->comments()->save(Comment::factory()->make());
+            });
+        }
 
-    public function definition()
-    {
-        return [
-            "user_id" => User::all()->random()->id,
-            "title" => $this->faker->sentence(10),
-            "content" => $this->faker->paragraphs(5, true),
-        ];
-    }
+        public function definition()
+        {
+            return [
+                "user_id" => User::all()->random()->id,
+                "title" => $this->faker->sentence(10),
+                "content" => $this->faker->paragraphs(5, true),
+                "created_at" => $this->faker->dateTimeBetween("-3 months"),
+            ];
+        }
 
-    public function newTitleAndContent()
-    {
-        return $this->state([
-            "title" => "new title",
-            "content" => "new content",
-        ]);
+        public function newTitleAndContent()
+        {
+            return $this->state([
+                "title" => "new title",
+                "content" => "new content",
+            ]);
+        }
     }
-}

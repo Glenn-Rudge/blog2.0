@@ -60,7 +60,7 @@
         <!-- Grid row -->
         <div class="row mt-4">
             <!-- Grid column -->
-            @foreach($most_commented as $post)
+            @foreach($mostCommented as $post)
                 <div class="col-md-6 col-lg-12">
 
                     <!-- Image -->
@@ -137,7 +137,7 @@
     <hr>
     <!-- Section: Recent posts -->
     <section class="section mb-5">
-        @foreach($most_active as $user)
+        @foreach($mostActive as $user)
             <div class="post-border">
 
                 <!-- Grid row -->
@@ -187,7 +187,7 @@
     <hr>
     <!-- Section: Recent posts -->
     <section class="section mb-5">
-        @foreach($most_active_last_month as $user)
+        @foreach($mostActive as $user)
             <div class="post-border">
 
                 <!-- Grid row -->

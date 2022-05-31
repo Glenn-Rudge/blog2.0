@@ -5,6 +5,8 @@
     use App\Models\BlogPost;
     use App\Models\User;
     use Illuminate\Auth\Access\HandlesAuthorization;
+    use Illuminate\Auth\Access\Response;
+    use Illuminate\Support\Facades\Auth;
 
     class BlogPostPolicy
     {
@@ -39,9 +41,9 @@
          * @param  \App\Models\User  $user
          * @return \Illuminate\Auth\Access\Response|bool
          */
-        public function create(User $user)
+        public function create(User $user, BlogPost $blogPost)
         {
-            //
+            return Auth::check();
         }
 
         /**
@@ -53,7 +55,9 @@
          */
         public function update(User $user, BlogPost $blogPost)
         {
-            return $user->id === $blogPost->user_id;
+            return $user->id === $blogPost->user_id
+                ? Response::allow()
+                : Response::deny("You can't update this blog post.");
         }
 
         /**
@@ -65,7 +69,9 @@
          */
         public function delete(User $user, BlogPost $blogPost)
         {
-            return $user->id === $blogPost->user_id;
+            return $user->id === $blogPost->user_id
+                ? Response::allow()
+                : Response::deny("You can't delete this post.");
         }
 
         /**

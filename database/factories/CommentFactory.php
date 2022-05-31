@@ -1,18 +1,19 @@
 <?php
 
-namespace Database\Factories;
+    namespace Database\Factories;
 
-use App\Models\BlogPost;
-use Illuminate\Database\Eloquent\Factories\Factory;
+    use App\Models\BlogPost;
+    use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CommentFactory extends Factory
-{
-
-    public function definition()
+    class CommentFactory extends Factory
     {
-        return [
-            "blog_post_id" => BlogPost::all()->random()->id,
-            "content" => $this->faker->text,
-        ];
+
+        public function definition()
+        {
+            return [
+                "blog_post_id" => BlogPost::all()->random()->id,
+                "content" => $this->faker->text,
+                "created_at" => $this->faker->dateTimeBetween("-3 months"),
+            ];
+        }
     }
-}

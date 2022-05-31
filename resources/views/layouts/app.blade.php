@@ -16,12 +16,12 @@
             </div>
 
         @endif
-                <p class="grey-text text-center mb-5 pb-3">
-                    <em>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                        rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae sit aspernatur
-                        aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi.
-                    </em>
-                </p>
+        <p class="grey-text text-center mb-5 pb-3">
+            <em>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+                rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae sit aspernatur
+                aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi.
+            </em>
+        </p>
 
         <hr>
 
@@ -43,7 +43,15 @@
             </div>
             <!-- Main listing -->
             @if(Request::route()->getName() == "home.index" || Request::route()->getName() == "posts.index")
-                @include("layouts.partials.sidebar")
+                <x-sidebar mostCommented="$mostCommented" mostActive="$mostActive"
+                           withMostBlogPostsLastMonth="$withMostBlogPostsLastMonth"></x-sidebar>
+                {{--                @include("layouts.partials.sidebar",--}}
+                {{--                [--}}
+                {{--                    "most_commented" => App\Models\BlogPost::mostCommented()->take(5)->get(),--}}
+                {{--                    "most_active" => App\Models\User::withMostBlogPosts()->take(5)->get(),--}}
+                {{--                    "most_active_last_month" => App\Models\User::withMostBlogPostsLastMonth()->take(5)->get()--}}
+                {{--                ])--}}
+                {{--                --}}{{--                TODO:// Remove this from here and put it somewhere more suitable--}}
             @endif
 
         </div>

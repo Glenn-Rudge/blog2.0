@@ -14,6 +14,9 @@
                 <p class="grey-text text-center mb-4 text-uppercase spacing wow fadeIn" data-wow-delay="0.2s">
                     post description
                 </p>
+                <p class="grey-text text-center mb-4 text-uppercase spacing wow fadeIn" data-wow-delay="0.2s">
+                    Currently being read by {{ $counter }} people.
+                </p>
             </div>
         </section>
         <!-- Intro -->
@@ -209,9 +212,9 @@
                                                         <!-- Image column -->
                                                         <div class="col-sm-2 col-12 mb-3">
                                                             <img
-                                                                src="https://mdbootstrap.com/img/Photos/Avatars/img (8).jpg"
-                                                                class="avatar rounded-circle z-depth-1-half"
-                                                                alt="sample image">
+                                                                    src="https://mdbootstrap.com/img/Photos/Avatars/img (8).jpg"
+                                                                    class="avatar rounded-circle z-depth-1-half"
+                                                                    alt="sample image">
                                                         </div>
                                                         <!-- Image column -->
 
