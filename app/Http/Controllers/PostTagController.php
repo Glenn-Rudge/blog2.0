@@ -2,19 +2,18 @@
 
     namespace App\Http\Controllers;
 
-    use Illuminate\Support\Facades\Cache;
+    use App\Models\Tag;
 
     class PostTagController extends Controller
     {
         public function index($tag)
         {
-//            $tag = Tag::findorFail($tag);
+            $tag = Tag::findOrFail($tag);
 
-            $posts = Cache::remember("posts", now()->addSeconds(60), function () use ($tag) {
-                return $tag->blogPosts;
-            });
-
-
-            return view("posts.index", ["posts" => $posts]);
+            return view("posts.index", [
+                "posts" => $tag->blogPosts()
+                    ->latestWithRelations()
+                    ->get()
+            ]);
         }
     }

@@ -21,17 +21,12 @@
 
         public function index(Request $request)
         {
-            // Cache Configuration
-//            $posts = Cache::tags(["blog-post"])->remember("posts", now()->addSeconds(60), function () {
-//                return BlogPost::withCount("comments")->with("user")->get();
-//            });
-
             $posts = Cache::remember("posts", now()->addSeconds(60), function () {
-                return BlogPost::withCount("comments")->with("user")->get();
+                return BlogPost::latestWithRelations()->get();
             });
 
             $mostCommentedBlogPosts = Cache::remember("mostCommented", now()->addSeconds(60), function () {
-                return BlogPost::mostCommented()->take(5)->get();
+                return BlogPost::latest()->mostCommented()->take(5)->get();
             });
 
             $mostActive = Cache::remember("mostActive", now()->addSeconds(60), function () {
@@ -62,8 +57,6 @@
 
         public function create()
         {
-//            $this->authorize("create");
-
             return view("posts.create");
         }
 
@@ -75,6 +68,10 @@
 
             $post = BlogPost::create($validatedData);
 
+            if ($request->hasFile("thumbnail")) {
+                $path = $request->file("thumbnail")->store("images/posts/thumbnails");
+            }
+
             $request->session()->flash("status", "Blog post created successfully.");
 
             return redirect()->route("posts.show", ["post" => $post->id]);
@@ -84,12 +81,12 @@
         {
             $post = Cache::remember("blog-post-{$id}", now()->addSeconds(30),
                 function () use ($id) {
-                    return BlogPost::with("comments")->findOrFail($id);
+                    return BlogPost::with("comments", "tags", "user", "comments.user")
+                        ->findOrFail($id);
                 });
-            
+
             return view("posts.show", [
                 "post" => $post,
-//                "counter" => $counter
             ]);
         }
 

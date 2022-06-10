@@ -7,15 +7,13 @@
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Database\Eloquent\Relations\BelongsTo;
     use Illuminate\Database\Eloquent\SoftDeletes;
+    use Illuminate\Support\Facades\Cache;
 
     class Comment extends Model
     {
         use HasFactory, SoftDeletes;
 
-//        public function scopeLatest(Builder $query)
-//        {
-//            $query->orderBy(static::CREATED_AT, "DESC");
-//        }
+        protected $fillable = ["user_id", "content"];
 
         public function blogPost(): BelongsTo
         {
@@ -32,5 +30,9 @@
             parent::boot();
 
             static::addGlobalScope(new LatestScope);
+
+            static::creating(function (Comment $comment) {
+                Cache::forget("blog-post-{$comment->blog_post_id}");
+            });
         }
     }

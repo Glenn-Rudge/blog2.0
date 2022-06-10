@@ -6,7 +6,6 @@
     use App\Models\User;
     use Illuminate\Auth\Access\HandlesAuthorization;
     use Illuminate\Auth\Access\Response;
-    use Illuminate\Support\Facades\Auth;
 
     class BlogPostPolicy
     {
@@ -43,7 +42,7 @@
          */
         public function create(User $user, BlogPost $blogPost)
         {
-            return Auth::check();
+            return true;
         }
 
         /**

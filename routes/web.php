@@ -19,12 +19,12 @@
 
     Route::resource("posts", PostController::class);
 
-    Route::resource("posts.comments", PostCommentController::class);
-
-
     Route::get("/posts/tag/{tag}", [PostTagController::class, "index"])->name("posts.tags.index");
 
+    Route::resource("posts.comments", PostCommentController::class)->only(["store"]);
+
     Route::get("/restore-post/{id}", [PostController::class, "restore"])->name("posts.restore");
+
 
     require __DIR__."/auth.php";
 

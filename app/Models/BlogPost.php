@@ -30,6 +30,14 @@
             return $query->withCount("comments")->orderBy("comments_count", "DESC");
         }
 
+        public function scopeLatestWithRelations(Builder $query): Builder
+        {
+            return $query->latest()
+                ->withCount("comments")
+                ->with("user")
+                ->with("tags");
+        }
+
         public function user(): BelongsTo
         {
             return $this->belongsTo(User::class, "user_id", "id");

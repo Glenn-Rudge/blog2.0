@@ -208,42 +208,44 @@
                                             <div class="comments-list text-center text-md-left">
                                                 <div class="text-center my-5">
                                                     <h3 class="font-weight-bold">Comments
-                                                        <span class="badge indigo">3</span>
+                                                        <span class="badge indigo">{{ $post->comments->count() }}</span>
                                                     </h3>
                                                 </div>
                                                 <!-- First row -->
-                                                @forelse($post->comments as $comment)
-                                                    <div class="row mb-5">
-                                                        <!-- Image column -->
-                                                        <div class="col-sm-2 col-12 mb-3">
-                                                            <img
-                                                                    src="https://mdbootstrap.com/img/Photos/Avatars/img (8).jpg"
-                                                                    class="avatar rounded-circle z-depth-1-half"
-                                                                    alt="sample image">
-                                                        </div>
-                                                        <!-- Image column -->
+                                                <div class="row mb-5">
+                                                    @foreach($post->comments as $comment)
+                                                        <div class="d-flex justify-content-between my-5">
+                                                            <!-- Image column -->
+                                                            <div>
+                                                                <div class="mb-3">
+                                                                    <img
+                                                                            src="https://mdbootstrap.com/img/Photos/Avatars/img (8).jpg"
+                                                                            class="avatar rounded-circle"
+                                                                            alt="sample image">
+                                                                </div>
+                                                                <!-- Image column -->
 
-                                                        <!-- Content column -->
-                                                        <div class="col-sm-10 col-12">
-                                                            <a>
-                                                                <h5 class="user-name font-weight-bold">John Doe</h5>
-                                                            </a>
-                                                            <div class="card-data">
-                                                                <ul class="list-unstyled">
-                                                                    <li class="comment-date font-small">
-                                                                        <i class="far fa-clock-o"></i> {{ $comment->created_at->diffForHumans() }}
-                                                                    </li>
-                                                                </ul>
+                                                                <!-- Content column -->
+                                                                <div>
+                                                                    <a>
+                                                                        <h5 class="user-name font-weight-bold">
+                                                                            {{ $comment->user->first_name }} {{ $comment->user->last_name }}
+                                                                            <span>$user->role</span>
+                                                                        </h5>
+                                                                    </a>
+                                                                    <div class="card-data">
+                                                                        <ul class="list-unstyled">
+                                                                            <li class="comment-date font-small">
+                                                                                {{ $comment->content }}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <p class="dark-grey-text article">
-                                                                {{ $comment->content }}
-                                                            </p>
                                                         </div>
-                                                        <!-- Content column -->
-                                                    </div>
-                                            @empty
-                                            @endforelse
-                                            <!-- First row -->
+                                                    @endforeach
+                                                </div>
+
                                             </div>
                                             <!-- Main wrapper -->
 
@@ -253,76 +255,21 @@
                                         <!-- Section: Leave a reply (Not Logged In User) -->
                                         @auth
                                             <section class="mb-4 wow fadeIn" data-wow-delay="0.2s">
-                                                <div>
-                                                    @if($errors->any)
-                                                        @foreach($errors->all() as $error)
-                                                            <div class="alert alert-primary" role="alert">
-                                                                {{ $error }}
-                                                            </div>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <form method="POST">
-                                                    @csrf
-                                                    <h3 class="font-weight-bold text-center my-5">Leave a reply</h3>
-
-                                                    <!-- Grid row -->
-                                                    <div class="row">
-
-                                                        <!-- Grid column -->
-                                                        <div class="col-lg-6 col-md-12 mb-4">
-
-                                                            <div class="input-group md-form form-sm form-3 pl-0">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text white black-text"
-                                                                          id="basic-addon8">Name</span>
-                                                                </div>
-                                                                <input type="text"
-                                                                       class="form-control mt-0 black-border rgba-white-strong"
-                                                                       placeholder="{{ auth()->user() ? auth()->user()->first_name : "Sign up for an account to leave a comment" }}"
-                                                                       aria-describedby="basic-addon9"
-                                                                       disabled
-                                                                >
-                                                            </div>
-
+                                                @if($errors->any)
+                                                    @foreach($errors->all() as $error)
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {{ $error }}
                                                         </div>
-                                                        <!-- Grid column -->
-
-                                                        <!-- Grid column -->
-                                                        <div class="col-lg-6 col-md-6 mb-4">
-                                                            <div class="input-group md-form form-sm form-3 pl-0">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text white black-text"
-                                                                          id="basic-addon10">Credits</span>
-                                                                </div>
-                                                                <input type="number"
-                                                                       class="form-control mt-0 black-border rgba-white-strong"
-                                                                       placeholder="0"
-                                                                       aria-describedby="basic-addon9"
-                                                                       disabled>
-                                                            </div>
-
-                                                        </div>
-                                                        <!-- Grid column -->
-                                                    </div>
-                                                    <!-- Grid row -->
-                                                    <!-- Grid row -->
-                                                    <div class="row">
-
-                                                        <div class="col-12 mt-1">
-                                                            <div class="form-group basic-textarea rounded-corners">
-                                                                <textarea class="form-control"
-                                                                          id="exampleFormControlTextarea6" rows="5"
-                                                                          placeholder="Write something here..."></textarea>
-                                                            </div>
-                                                            <div class="text-right">
-                                                                <button type="submit" class="btn btn-grey btn-block">
-                                                                    Submit
-                                                                </button>
-                                                            </div>
-                                                </form>
+                                                    @endforeach
+                                                @endif
+                                            </section>
+                                            @if(\Illuminate\Support\Facades\Auth::check())
+                                                @include("comments._form")
+                                            @else
+                                                <p class="lead">Login/Register to create a comment</p>
+                                            @endif
+                                        @endguest
                                     </div>
-
                                 </div>
                                 <!-- Grid row -->
 
@@ -334,17 +281,8 @@
 
                     </div>
                     <!-- Grid row -->
-
-        </section>
-    @endauth
-    <!-- Section: Blog v.3 -->
-
-        </div>
-        <!-- Main listing -->
-        </div>
-        <!-- Blog -->
-
-        </div>
+                </div>
+            </div>
         </section>
     </main>
     <!-- Main layout -->

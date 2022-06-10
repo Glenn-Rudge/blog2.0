@@ -5,10 +5,16 @@
         <!-- Featured image -->
         <div class="view overlay z-depth-1">
             <img src="https://mdbootstrap.com/img/Photos/Others/photo9.jpg" class="img-fluid"
-                 alt="First sample image">
+                 alt="post image">
             <a href="{{ route("posts.show", $post->id) }}">
                 <div class="mask rgba-white-slight"></div>
             </a>
+        </div>
+        <div class="my-2">
+            @foreach($post->tags as $tag)
+                <a class="badge badge-primary"
+                   href="{{ route("posts.tags.index", ["tag" => $tag->id]) }}">{{ $tag->name }}</a>
+            @endforeach
         </div>
     </div>
     <!-- Grid column -->
