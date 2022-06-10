@@ -10,6 +10,7 @@
     use Illuminate\Database\Eloquent\Relations\BelongsTo;
     use Illuminate\Database\Eloquent\Relations\BelongsToMany;
     use Illuminate\Database\Eloquent\Relations\HasMany;
+    use Illuminate\Database\Eloquent\Relations\HasOne;
     use Illuminate\Database\Eloquent\SoftDeletes;
     use Illuminate\Support\Facades\Cache;
 
@@ -19,10 +20,10 @@
 
         protected $fillable = ["title", "content", "user_id"];
 
-//        public function scopeLatest(Builder $query): Builder
-//        {
-//            return $query->orderBy(static::CREATED_AT, "DESC");
-//        }
+        public function scopeLatest(Builder $query): Builder
+        {
+            return $query->orderBy(static::CREATED_AT, "DESC");
+        }
 
         // Local Scope
         public function scopeMostCommented(Builder $query): Builder
@@ -51,6 +52,11 @@
         public function tags(): BelongsToMany
         {
             return $this->belongsToMany(Tag::class)->withTimestamps();
+        }
+
+        public function image(): HasOne
+        {
+            return $this->hasOne(Image::class);
         }
 
         public static function boot()
