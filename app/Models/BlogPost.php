@@ -72,8 +72,13 @@
                 Cache::forget("blog-post-{$blogPost->id}");
             });
 
+            static::deleting(function (BlogPost $blogPost) {
+                $blogPost->comments()->delete();
+            });
+
             static::restoring(function (BlogPost $blogPost) {
                 $blogPost->comments()->restore();
+                $blogPost->image()->restore();
             });
         }
     }

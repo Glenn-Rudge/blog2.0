@@ -17,15 +17,12 @@
     <label class="form-label" for="title">Thumbnail</label>
     <input name="thumbnail" type="file" id="thumbnail" class="form-control-file"/>
 </div>
-
 @if($errors->any())
-    <div>
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    @foreach($errors->all() as $error)
+        <div class="alert alert-danger" role="alert">
+            {{ $error }}
+        </div>
+    @endforeach
 @endif
 <input type="hidden" name="user_id"/>
 <!-- Submit button -->

@@ -4,11 +4,19 @@
     <div class="col-lg-5 mb-4">
         <!-- Featured image -->
         <div class="view overlay z-depth-1">
-            <img src="https://mdbootstrap.com/img/Photos/Others/photo9.jpg" class="img-fluid"
-                 alt="post image">
-            <a href="{{ route("posts.show", $post->id) }}">
-                <div class="mask rgba-white-slight"></div>
-            </a>
+            @if(isset($post->image->path))
+                <div class="my-2">
+                    <img src="{{ $post->image->url() }}" class="img-fluid"
+                         alt="post image">
+                </div>
+            @endif
+            <div class="my-2">
+                <img src="https://mdbootstrap.com/img/Photos/Others/photo9.jpg" class="img-fluid"
+                     alt="post image">
+                <a href="{{ route("posts.show", $post->id) }}">
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
         </div>
         <div class="my-2">
             @foreach($post->tags as $tag)

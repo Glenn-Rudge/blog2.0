@@ -4,11 +4,13 @@
 
     use App\Http\Requests\StoreBlogPost;
     use App\Models\BlogPost;
+    use App\Models\Image;
     use App\Models\User;
     use Illuminate\Http\RedirectResponse;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Cache;
+    use Illuminate\Support\Facades\Storage;
 
 
     class PostController extends Controller
@@ -70,6 +72,11 @@
 
             if ($request->hasFile("thumbnail")) {
                 $path = $request->file("thumbnail")->store("images/posts/thumbnails");
+
+                $post->image()->save(
+                    Image::create([
+                        "path" => $path,
+                    ]));
             }
 
             $request->session()->flash("status", "Blog post created successfully.");
@@ -114,6 +121,23 @@
             $validatedData = $request->validated();
 
             $post->fill($validatedData);
+
+            if ($request->hasFile("thumbnail")) {
+                $path = $request->file("thumbnail")->store("images/posts/thumbnails");
+
+                if ($post->image) {
+                    Storage::delete($post->image->path);
+                    
+                    $path->image->path = $path;
+
+                    $post->image->save();
+                } else {
+                    $post->image()->save(
+                        Image::create([
+                            "path" => $path,
+                        ]));
+                }
+            }
 
             $post->save();
 

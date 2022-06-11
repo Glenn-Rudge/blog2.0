@@ -11,7 +11,10 @@
                         {{ $tag->name }}
                     </a>
                 @endforeach
-                {{--                <img src="https://mdbootstrap.com/img/Photos/Others/nature3.jpg" class="img-fluid" alt="First sample image">--}}
+                @if($post->image)
+                    <img src="{{ $post->image->url() }}" class="img-fluid"
+                         alt="post image">
+                @endif
                 <h1 class="text-center dark-grey-text pb-3 pt-5 wow fadeIn" data-wow-delay="0.2s">
                     <strong> {{ $post->title }} </strong>
                 </h1>
