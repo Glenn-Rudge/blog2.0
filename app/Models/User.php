@@ -5,6 +5,7 @@
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Relations\HasMany;
+    use Illuminate\Database\Eloquent\Relations\HasOne;
     use Illuminate\Foundation\Auth\User as Authenticatable;
     use Illuminate\Notifications\Notifiable;
     use Laravel\Sanctum\HasApiTokens;
@@ -16,6 +17,7 @@
         protected $fillable = [
             "first_name",
             "last_name",
+            "avatar",
             "email",
             "password",
             "phone_number",
@@ -58,5 +60,10 @@
         public function comments(): HasMany
         {
             return $this->hasMany(Comment::class);
+        }
+
+        public function avatar(): HasOne
+        {
+            return $this->hasOne(Avatar::class);
         }
     }

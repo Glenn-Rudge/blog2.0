@@ -1,10 +1,14 @@
 @extends("layouts.app")
 @section("content")
     <div class="d-flex">
-        <div>
+        <div class="col-md">
             <h1>
                 Welcome to your dashboard, {{ auth()->user()->first_name }}.
             </h1>
+            <div class="col-md">
+                <img src="{{ \Illuminate\Support\Facades\Auth::user()->avatar }}" alt="">
+            </div>
+            <?php echo \Illuminate\Support\Facades\Auth::user(); ?>
         </div>
     </div>
     <hr/>

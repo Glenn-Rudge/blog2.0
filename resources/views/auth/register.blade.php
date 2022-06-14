@@ -1,7 +1,8 @@
 @extends("layouts.app")
 @section("title", "Register")
 @section("content")
-    <form method="POST" action="{{ route("register") }}" class="needs-validation" novalidate autocomplete="off">
+    <form method="POST" action="{{ route("register") }}" class="needs-validation" novalidate autocomplete="off"
+          enctype="multipart/form-data">
         @if($errors->any())
             @foreach($errors->all() as $error)
                 <div>
@@ -13,7 +14,8 @@
         <div class="form-row">
             <div class="col">
                 <div class="md-form md-outline mt-0">
-                    <input type="text" name="first_name" id="first_name" class="form-control" value="{{ old("first_name") }}">
+                    <input type="text" name="first_name" id="first_name" class="form-control"
+                           value="{{ old("first_name") }}">
                     <label for="first-name">First name</label>
                     <div class="invalid-feedback">
                         First name should contain from 4 to 50 characters
@@ -22,7 +24,8 @@
             </div>
             <div class="col">
                 <div class="md-form md-outline mt-0">
-                    <input type="text" name="last_name" id="last-name" class="form-control" value="{{ old("last_name") }}">
+                    <input type="text" name="last_name" id="last-name" class="form-control"
+                           value="{{ old("last_name") }}">
                     <label for="last-name">Last name</label>
                     <div class="invalid-feedback">
                         Last name should contain from 4 to 50 characters
@@ -31,6 +34,14 @@
             </div>
         </div>
 
+        <div class="form-row">
+            <div class="form-group">
+                <input name="avatar" type="file" class="form-control-file" id="avatar">
+                <small id="avatar" class="ml-2 form-text text-muted">
+                    Avatar
+                </small>
+            </div>
+        </div>
         <div class="md-form md-outline mt-0">
             <input type="email" name="email" id="email" class="form-control" value="{{ old("email") }}">
             <label data-error="wrong" data-success="right" for="user-email">Your email</label>
@@ -51,7 +62,8 @@
         </div>
 
         <div class="md-form md-outline">
-            <input type="number" name="phone_number" id="phone_number" class="form-control" value="{{ old("phone_number") }}"
+            <input type="number" name="phone_number" id="phone_number" class="form-control"
+                   value="{{ old("phone_number") }}"
                    aria-describedby="register-phoneHelpBlock">
             <label for="phone_number">Phone number</label>
             <small id="register-phoneHelpBlock" class="form-text text-muted mb-3">

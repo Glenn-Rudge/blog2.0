@@ -3,6 +3,7 @@
     namespace App\Http\Controllers\Auth;
 
     use App\Http\Controllers\Controller;
+    use App\Models\Avatar;
     use App\Models\User;
     use App\Providers\RouteServiceProvider;
     use Illuminate\Auth\Events\Registered;
@@ -18,7 +19,7 @@
          *
          * @return \Illuminate\View\View
          */
-        public function create ()
+        public function create()
         {
             return view("auth.register");
         }
@@ -26,16 +27,17 @@
         /**
          * Handle an incoming registration request.
          *
-         * @param \Illuminate\Http\Request $request
+         * @param  \Illuminate\Http\Request  $request
          * @return \Illuminate\Http\RedirectResponse
          *
          * @throws \Illuminate\Validation\ValidationException
          */
-        public function store (Request $request)
+        public function store(Request $request)
         {
             $request->validate([
                 "first_name" => ["required", "string", "max:255"],
                 "last_name" => ["required", "string", "max:255"],
+                "avatar" => ["image:png,jpeg,jpg"],
                 "email" => ["required", "string", "email", "max:255", "unique:users"],
                 "password" => ["required", "confirmed", Rules\Password::defaults()],
                 "phone_number" => ["required"],
@@ -48,6 +50,18 @@
                 "password" => Hash::make($request->password),
                 "phone_number" => $request->input("phone_number"),
             ]);
+
+            $user->refresh();
+
+            if ($request->hasFile("avatar")) {
+                $path = $request->file("avatar")->store("images/users/avatar");
+
+                $user->avatar()->save(
+                    Avatar::create([
+                        "path" => $path
+                    ])
+                );
+            }
 
             event(new Registered($user));
 
