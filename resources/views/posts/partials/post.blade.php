@@ -34,6 +34,7 @@
             {{--                on {{ \Carbon\Carbon::parse($post->created_at)->toFormattedDateString()}}--}}
             {{--            </p>--}}
             <x-updated :date="$post->created_at" name="{{ $post->user->first_name }}">
+                @slot("userId", $post->user_id)
             </x-updated>
             <strong>
                 <a href="{{ route("posts.show", $post->id) }}">{{ $post->title }}</a>
