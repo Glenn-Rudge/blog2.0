@@ -74,9 +74,10 @@
                 $path = $request->file("thumbnail")->store("images/posts/thumbnails");
 
                 $post->image()->save(
-                    Image::create([
-                        "path" => $path,
-                    ]));
+                    Image::make(
+                        ["path" => $path]
+                    )
+                );
             }
 
             $request->session()->flash("status", "Blog post created successfully.");
@@ -127,15 +128,14 @@
 
                 if ($post->image) {
                     Storage::delete($post->image->path);
-                    
+
                     $path->image->path = $path;
 
                     $post->image->save();
                 } else {
                     $post->image()->save(
-                        Image::create([
-                            "path" => $path,
-                        ]));
+                        Image::make(["path" => $path])
+                    );
                 }
             }
 

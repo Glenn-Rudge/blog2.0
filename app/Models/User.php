@@ -5,7 +5,7 @@
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Relations\HasMany;
-    use Illuminate\Database\Eloquent\Relations\HasOne;
+    use Illuminate\Database\Eloquent\Relations\MorphOne;
     use Illuminate\Foundation\Auth\User as Authenticatable;
     use Illuminate\Notifications\Notifiable;
     use Laravel\Sanctum\HasApiTokens;
@@ -57,13 +57,18 @@
             return $this->hasMany(BlogPost::class);
         }
 
-        public function comments(): HasMany
+        public function commentsOn(): HasMany
         {
-            return $this->hasMany(Comment::class);
+            return $this->morphMany(Comment::class, "commentable")->latest();
         }
 
-        public function avatar(): HasOne
+        public function image(): MorphOne
         {
-            return $this->hasOne(Avatar::class);
+            return $this->morphOne(Image::class, "imageable");
         }
+
+//        public function avatar(): HasOne
+//        {
+//            return $this->hasOne(Avatar::class);
+//        }
     }

@@ -16,10 +16,7 @@
                 $table->id();
                 $table->string("path");
                 $table->unsignedBigInteger("blog_post_id")->nullable();
-                $table->foreign("blog_post_id")
-                    ->references("id")
-                    ->on("blog_posts")
-                    ->onDelete("CASCADE");
+//                $table->foreign("blog_post_id")->references("id")->on("blog_posts")->onDelete("CASCADE");
                 $table->timestamps();
             });
         }

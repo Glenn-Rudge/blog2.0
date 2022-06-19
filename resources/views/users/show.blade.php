@@ -15,7 +15,7 @@
                     <div class="col-md-12 mb-4 mt-5" style="margin-top: -100px;">
 
                         <div class="avatar mx-auto">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg"
+                            <img src="{{ $user->image ? $user->image->url(): '' }}"
                                  class="img-fluid rounded-circle z-depth-1"
                                  alt="First sample avatar image">
                         </div>
@@ -39,17 +39,8 @@
                             <i class="fab fa-instagram grey-text"> </i>
                         </a>
 
-                        <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt
-                            ut labore et dolore
-                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                            aliquip ex ea
-                            commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                            fugiat nulla
-                            pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                            anim.
+                        <p class="mt-5">
+                            Hello, my name is {{ $user->first_name }}, I'm a $user->job, from $user->city
                         </p>
 
                     </div>

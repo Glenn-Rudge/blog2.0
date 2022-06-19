@@ -2,6 +2,8 @@
 
     namespace App\Http\Controllers;
 
+    use App\Http\Requests\UpdateUserRequest;
+    use App\Models\Image;
     use App\Models\User;
     use Illuminate\Http\Request;
 
@@ -73,9 +75,23 @@
          * @param  \App\Models\User  $user
          * @return \Illuminate\Http\Response
          */
-        public function update(Request $request, User $user)
+        public function update(UpdateUserRequest $request, User $user)
         {
-            dd($user);
+            if ($request->hasFile("avatar")) {
+                $path = $request->file("avatar")->store("images/users/avatar");
+
+                if ($user->image) {
+                    $user->image->path = $path;
+                    $user->image->save();
+                } else {
+                    $user->image()->save(
+                        Image::make(["path" => $path])
+                    );
+                }
+                $request->session()->flash("status", "Profile updated successfully");
+
+                return redirect()->back();
+            }
         }
 
         /**

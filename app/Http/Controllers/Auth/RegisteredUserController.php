@@ -3,7 +3,6 @@
     namespace App\Http\Controllers\Auth;
 
     use App\Http\Controllers\Controller;
-    use App\Models\Avatar;
     use App\Models\User;
     use App\Providers\RouteServiceProvider;
     use Illuminate\Auth\Events\Registered;
@@ -53,15 +52,15 @@
 
             $user->refresh();
 
-            if ($request->hasFile("avatar")) {
-                $path = $request->file("avatar")->store("images/users/avatar");
-
-                $user->avatar()->save(
-                    Avatar::create([
-                        "path" => $path
-                    ])
-                );
-            }
+//            if ($request->hasFile("avatar")) {
+//                $path = $request->file("avatar")->store("images/users/avatar");
+//
+//                $user->avatar()->save(
+//                    Avatar::create([
+//                        "path" => $path
+//                    ])
+//                );
+//            }
 
             event(new Registered($user));
 

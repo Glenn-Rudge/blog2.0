@@ -12,9 +12,10 @@
          */
         public function up()
         {
-            Schema::table('images', function (Blueprint $table) {
-                $table->dropColumn("blog_post_id");
-                $table->morphs("imageable");
+            Schema::table('comments', function (Blueprint $table) {
+                $table->dropForeign(["blog_post_id"]);
+                $table->dropColumn(["blog_post_id"]);
+                $table->morphs("commentable");
             });
         }
 
@@ -25,9 +26,10 @@
          */
         public function down()
         {
-            Schema::table('images', function (Blueprint $table) {
-                $table->unsignedBigInteger("blog_post_id")->nullable();
-                $table->dropMorphs("imageable");
+            Schema::table('comments', function (Blueprint $table) {
+                $table->dropMorphs("commentable");
+                $table->unsignedBigInteger("blog_post_id")->index();
+                $table->foreign("blog_post_id")->references("id")->on("blog_posts");
             });
         }
     };

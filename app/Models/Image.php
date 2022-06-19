@@ -4,17 +4,18 @@
 
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Relations\MorphTo;
     use Illuminate\Support\Facades\Storage;
 
     class Image extends Model
     {
         use HasFactory;
 
-        public $fillable = ["blog_post_id", "path"];
+        public $fillable = ["path", "imageable_id", "imageable_type"];
 
-        public function blogPost()
+        public function imageable(): MorphTo
         {
-            return $this->belongsTo(BlogPost::class, "blog_post_id", "id");
+            return $this->morphTo();
         }
 
         public function url(): string

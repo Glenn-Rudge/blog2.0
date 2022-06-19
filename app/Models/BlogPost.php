@@ -9,8 +9,8 @@
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Database\Eloquent\Relations\BelongsTo;
     use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-    use Illuminate\Database\Eloquent\Relations\HasMany;
-    use Illuminate\Database\Eloquent\Relations\HasOne;
+    use Illuminate\Database\Eloquent\Relations\MorphMany;
+    use Illuminate\Database\Eloquent\Relations\MorphOne;
     use Illuminate\Database\Eloquent\SoftDeletes;
     use Illuminate\Support\Facades\Cache;
 
@@ -18,7 +18,7 @@
     {
         use HasFactory, SoftDeletes;
 
-        protected $fillable = ["title", "content", "user_id"];
+        protected $fillable = ["title", "content", "user_id", "imageable_id"];
 
         public function scopeLatest(Builder $query): Builder
         {
@@ -44,9 +44,9 @@
             return $this->belongsTo(User::class, "user_id", "id");
         }
 
-        public function comments(): HasMany
+        public function comments(): MorphMany
         {
-            return $this->hasMany(Comment::class);
+            return $this->morphMany(Comment::class, "commentable")->latest();
         }
 
         public function tags(): BelongsToMany
@@ -54,9 +54,9 @@
             return $this->belongsToMany(Tag::class)->withTimestamps();
         }
 
-        public function image(): HasOne
+        public function image(): MorphOne
         {
-            return $this->hasOne(Image::class);
+            return $this->morphOne(Image::class, "imageable");
         }
 
         public static function boot()

@@ -15,9 +15,9 @@
 
         protected $fillable = ["user_id", "content"];
 
-        public function blogPost(): BelongsTo
+        public function commentable()
         {
-            return $this->belongsTo(BlogPost::class, "blog_post_id", "id");
+            $this->morphTo();
         }
 
         public function user(): BelongsTo
@@ -32,7 +32,9 @@
             static::addGlobalScope(new LatestScope);
 
             static::creating(function (Comment $comment) {
-                Cache::forget("blog-post-{$comment->blog_post_id}");
+                if ($comment->commentable_type === BlogPost::class) {
+                    Cache::forget("blog-post-{$comment->commentable}");
+                }
             });
         }
     }
