@@ -215,7 +215,7 @@
                                                     </h3>
                                                 </div>
                                                 <!-- First row -->
-                                                <div class="row mb-5">
+                                                <div class="mb-5">
                                                     @foreach($post->comments as $comment)
                                                         <div class="d-flex justify-content-between my-5">
                                                             <!-- Image column -->
@@ -232,7 +232,9 @@
                                                                 <div>
                                                                     <a>
                                                                         <h5 class="user-name font-weight-bold">
-                                                                            {{ $comment->user->first_name }} {{ $comment->user->last_name }}
+                                                                            <a href="/users/{{$comment->user->id}}">
+                                                                                {{ $comment->user->first_name }} {{ $comment->user->last_name }}
+                                                                            </a>
                                                                             <span>$user->role</span>
                                                                         </h5>
                                                                     </a>

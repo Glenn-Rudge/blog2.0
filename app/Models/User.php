@@ -5,6 +5,7 @@
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Relations\HasMany;
+    use Illuminate\Database\Eloquent\Relations\MorphMany;
     use Illuminate\Database\Eloquent\Relations\MorphOne;
     use Illuminate\Foundation\Auth\User as Authenticatable;
     use Illuminate\Notifications\Notifiable;
@@ -57,7 +58,7 @@
             return $this->hasMany(BlogPost::class);
         }
 
-        public function commentsOn(): HasMany
+        public function commentsOn(): MorphMany
         {
             return $this->morphMany(Comment::class, "commentable")->latest();
         }

@@ -24,6 +24,11 @@
                 <a role="button" class="nav-link btn btn-success btn-sm" href="{{ route("posts.create") }}">
                     Create A Post</a>
             </li>
+            <li class="nav-item">
+                <a role="button" class="nav-link btn btn-success btn-sm"
+                   href="{{ route("users.show", auth()->user()->id) }}">
+                    My Profile</a>
+            </li>
         </ul>
         <div class="col-sm">
             @if($posts->count() > 0)

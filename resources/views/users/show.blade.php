@@ -42,7 +42,73 @@
                         <p class="mt-5">
                             Hello, my name is {{ $user->first_name }}, I'm a $user->job, from $user->city
                         </p>
+                        @if($user->commentsOn)
+                            <ul class="list-group list-group-flush">
+                                @foreach($user->commentsOn as $comment)
+                                    <li class="list-group-item">
+                                        <p class="text-monospace text-muted text-left">
+                                            {{ $comment->content }} <br/>
+                                            - {{ $comment->user->first_name }}
+                                        </p>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                        <form method="POST" action="{{ route("users.comments.store", $user->id) }}">
+                            @csrf
+                            <h3 class="font-weight-bold text-center my-5">Leave a reply</h3>
+                            <!-- Grid row -->
+                            <div class="row">
+                                <!-- Grid column -->
+                                <div class="col-lg-6 col-md-12 mb-4">
 
+                                    <div class="input-group md-form form-sm form-3 pl-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text white black-text"
+                                                  id="basic-addon8">Name</span>
+                                        </div>
+                                        <input type="text"
+                                               class="form-control mt-0 black-border rgba-white-strong"
+                                               placeholder="{{ auth()->user() ? auth()->user()->first_name : "Sign up for an account to leave a comment" }}"
+                                               disabled
+                                        >
+                                    </div>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-lg-6 col-md-6 mb-4">
+                                    <div class="input-group md-form form-sm form-3 pl-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text white black-text"
+                                                  id="basic-addon10">Role</span>
+                                        </div>
+                                        <input type="number"
+                                               class="form-control mt-0 black-border rgba-white-strong"
+                                               placeholder="$user->role"
+                                               disabled>
+                                    </div>
+
+                                </div>
+                                <!-- Grid column -->
+                            </div>
+                            <!-- Grid row -->
+                            <!-- Grid row -->
+                            <div class="row">
+
+                                <div class="col-12 mt-1">
+                                    <div class="form-group basic-textarea rounded-corners">
+                <textarea name="content" class="form-control" id="content" rows="5"
+                          placeholder="Write something here..."></textarea>
+                                    </div>
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-grey btn-block">
+                                            Add Comment
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <!--Grid column-->
 

@@ -32,8 +32,11 @@
             static::addGlobalScope(new LatestScope);
 
             static::creating(function (Comment $comment) {
-                if ($comment->commentable_type === BlogPost::class) {
-                    Cache::forget("blog-post-{$comment->commentable}");
+//                Cache::forget("blog-post-{$comment->blog_post_id}");
+
+                if ($comment->commentable_type == BlogPost::class) {
+//                    Cache::forget("blog-post")->forget("blog-post-{$comment->commentable_id}");
+                    Cache::forget("blog-post-{$comment->commentable_id}");
                 }
             });
         }

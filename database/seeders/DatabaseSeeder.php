@@ -22,6 +22,7 @@
                 CommentSeeder::class,
                 TagSeeder::class,
                 BlogPostTagSeeder::class,
+//                RoleSeeder::class,
             ]);
         }
     }
