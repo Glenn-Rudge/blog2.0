@@ -2,6 +2,8 @@
 
     namespace App\Providers;
 
+    use App\Models\BlogPost;
+    use App\Observers\BlogPostObserver;
     use Illuminate\Support\Facades\Schema;
     use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +27,7 @@
         public function boot()
         {
             Schema::defaultStringLength(191);
+
+            BlogPost::observe(BlogPostObserver::class);
         }
     }
