@@ -3,7 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\Http\Requests\StoreComment;
-    use App\Jobs\NotifyUsersPostWasCommented;
+    use App\Jobs\SendCommentEmail;
     use App\Models\BlogPost;
     use Illuminate\Support\Facades\Auth;
 
@@ -21,9 +21,7 @@
 
             $comment = $post->comments()->create($validatedData);
 
-//            $this->dispatch(new SendCommentEmail($post, $comment));
-
-            NotifyUsersPostWasCommented::dispatch($comment);
+            $this->dispatch(new SendCommentEmail($post, $comment));
 
             $request->session()->flash("status", "Commented created.");
 
