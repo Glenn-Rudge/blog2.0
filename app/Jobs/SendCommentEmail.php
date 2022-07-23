@@ -37,6 +37,10 @@
          */
         public function handle()
         {
+//            $when = now()->addMinutes(1);
             Mail::to($this->post->user)->send(new CommentPosted($this->comment));
+
+//            Mail::to($this->post->user)
+//                ->later($when, new CommentPosted($this->comment));
         }
     }

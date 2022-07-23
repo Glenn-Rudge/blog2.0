@@ -23,6 +23,8 @@
 
             $this->dispatch(new SendCommentEmail($post, $comment));
 
+            SendCommentEmail::dispatch($comment);
+
             $request->session()->flash("status", "Commented created.");
 
             return redirect()->back();
