@@ -7,7 +7,7 @@
     use Illuminate\Mail\Mailable;
     use Illuminate\Queue\SerializesModels;
 
-    class CommentedPostedMarkdown extends Mailable
+    class CommentPostedMarkdown extends Mailable
     {
         public Comment $comment;
 

@@ -3,10 +3,9 @@
     namespace App\Http\Controllers;
 
     use App\Http\Requests\StoreComment;
-    use App\Mail\CommentedPostedMarkdown;
+    use App\Jobs\SendCommentEmail;
     use App\Models\BlogPost;
     use Illuminate\Support\Facades\Auth;
-    use Illuminate\Support\Facades\Mail;
 
     class PostCommentController extends Controller
     {
@@ -22,9 +21,7 @@
 
             $comment = $post->comments()->create($validatedData);
 
-            Mail::to($post->user)->send(
-                new CommentedPostedMarkdown($comment)
-            );
+            $this->dispatch(new SendCommentEmail($post, $comment));
 
             $request->session()->flash("status", "Commented created.");
 
