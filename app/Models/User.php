@@ -39,6 +39,14 @@
             return $query->withCount("blogPosts")->orderBy("blog_posts_count", "DESC");
         }
 
+        public function scopeThatHasCommentedOnPost(Builder $query, BlogPost $post): Builder
+        {
+            return $query->whereHas('comments', function ($query) use ($post) {
+                return $query->where('commentable_id', '=', $post->id)
+                    ->where('commentable_type', '=', BlogPost::class);
+            });
+        }
+
 //        TODO:// Try to remember this
         // The withCount method takes an array, with the column and closure, for a more complicated query.
         // For example: withCount(["posts" => function () ])
@@ -56,6 +64,11 @@
         public function blogPosts(): HasMany
         {
             return $this->hasMany(BlogPost::class);
+        }
+
+        public function comments(): HasMany
+        {
+            return $this->hasMany(Comment::class);
         }
 
         public function commentsOn(): MorphMany
