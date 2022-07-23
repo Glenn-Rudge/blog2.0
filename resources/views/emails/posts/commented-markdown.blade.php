@@ -1,12 +1,20 @@
-@component('mail::message')
-# Introduction
+@component("mail::message")
+    # Comment was posted on your blog post!
 
-The body of your message.
+    Hi <p>{{ $comment->commentable->user->name }}</p>
+    Someone has commented on your blog post!
+    @component("mail::button", ["url" => route("posts.show", ["post" => $comment->commentable->id])])
+        View The Blog Post
+    @endcomponent
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
+    @component("mail:button", ["url" => route("users.show", ["user" => $comment->user->id])])
+        Visit {{ $comment->user->name }} profile
+    @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
+    @component("mail:panel")
+        {{ $comment->content }}
+    @endcomponent
+
+    Thanks,<br>
+    {{ config("app.name") }}
 @endcomponent

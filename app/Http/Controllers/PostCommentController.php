@@ -3,7 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\Http\Requests\StoreComment;
-    use App\Mail\CommentPosted;
+    use App\Mail\CommentedPostedMarkdown;
     use App\Models\BlogPost;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Mail;
@@ -23,7 +23,7 @@
             $comment = $post->comments()->create($validatedData);
 
             Mail::to($post->user)->send(
-                new CommentPosted($comment)
+                new CommentedPostedMarkdown($comment)
             );
 
             $request->session()->flash("status", "Commented created.");

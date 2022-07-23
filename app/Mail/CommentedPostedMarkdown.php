@@ -10,7 +10,7 @@
     class CommentedPostedMarkdown extends Mailable
     {
         public Comment $comment;
-        
+
         use Queueable, SerializesModels;
 
         /**
@@ -30,6 +30,10 @@
          */
         public function build()
         {
-            return $this->markdown('emails.posts.commented-markdown');
+            $subject = "Comment was posted on your {$this->comment->commentable->title} blog post";
+
+            return $this
+                ->subject($subject)
+                ->markdown('emails.posts.commented-markdown');
         }
     }
