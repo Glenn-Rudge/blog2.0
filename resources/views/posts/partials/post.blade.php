@@ -34,7 +34,8 @@
             {{ \Illuminate\Support\Str::limit($post->content, 275, "...") }}
         </p>
         <!-- Deep-orange -->
-        <button type="button" class="btn btn-deep-orange btn-rounded btn-sm">Read more</button>
+        <a href="{{ route("posts.show", $post->id) }}" type="button" class="btn btn-deep-orange btn-rounded
+        btn-sm">Read more</a>
     </div>
     <!-- Grid column -->
     <hr/>

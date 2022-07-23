@@ -5,14 +5,14 @@
             {{ $error }}
         @endforeach
     @endif
-    <form class="form-horizontal" action="{{ route("users.update", $user->id) }}" method="POST"
+    <form class="form-horizontal" action="{{ route("users.update", ["user" => $user->id]) }}" method="POST"
           enctype="multipart/form-data">
         @csrf
         @method("PUT")
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <img src="{{ $user->image ? $user->image->url(): '' }}" alt="">
+                    <img src="{{ $user->image ? $user->image->url(): '' }}" alt="avatar">
                     <p class="text-sm">Image should be 128x128</p>
                     <label for="exampleFormControlFile1">Avatar</label>
                     <input name="avatar" type="file" class="form-control-file" id="avatar">

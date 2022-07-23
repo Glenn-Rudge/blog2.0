@@ -16,13 +16,6 @@
             </div>
 
         @endif
-        <p class="grey-text text-center mb-5 pb-3">
-            <em>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae sit aspernatur
-                aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi.
-            </em>
-        </p>
-
         <hr>
 
         <!-- Blog -->

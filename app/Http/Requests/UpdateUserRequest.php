@@ -3,6 +3,7 @@
     namespace App\Http\Requests;
 
     use Illuminate\Foundation\Http\FormRequest;
+    use JetBrains\PhpStorm\ArrayShape;
 
     class UpdateUserRequest extends FormRequest
     {
@@ -11,7 +12,7 @@
          *
          * @return bool
          */
-        public function authorize()
+        public function authorize(): bool
         {
             return true;
         }
@@ -21,7 +22,7 @@
          *
          * @return array<string, mixed>
          */
-        public function rules()
+        #[ArrayShape(["avatar" => "string"])] public function rules(): array
         {
             return [
                 "avatar" => "required|image|mimes:jpg,jpeg,png,svg|max:1024|dimensions:width=128,height=128"

@@ -3,6 +3,7 @@
     namespace App\Http\Controllers\Auth;
 
     use App\Http\Controllers\Controller;
+    use App\Models\Image;
     use App\Models\User;
     use App\Providers\RouteServiceProvider;
     use Illuminate\Auth\Events\Registered;
@@ -49,18 +50,19 @@
                 "password" => Hash::make($request->password),
                 "phone_number" => $request->input("phone_number"),
             ]);
+            
+            if ($request->hasFile("avatar")) {
+                $path = $request->file("avatar")->store("images/users/avatars");
 
-            $user->refresh();
-
-//            if ($request->hasFile("avatar")) {
-//                $path = $request->file("avatar")->store("images/users/avatar");
-//
-//                $user->avatar()->save(
-//                    Avatar::create([
-//                        "path" => $path
-//                    ])
-//                );
-//            }
+                if ($user->image) {
+                    $user->image->path = $path;
+                    $user->image->save();
+                } else {
+                    $user->image()->save(
+                        Image::make(["path" => $path])
+                    );
+                }
+            }
 
             event(new Registered($user));
 

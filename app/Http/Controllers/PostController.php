@@ -21,8 +21,8 @@
                 ->only(["create", "store", "edit", "update", "destroy"]);
         }
 
-        public function index(Request $request)
-        {
+        public function index(Request $request
+        ): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application {
             $posts = Cache::remember("posts", now()->addSeconds(60), function () {
                 return BlogPost::latestWithRelations()->get();
             });
@@ -48,12 +48,12 @@
             }
 
             return view("posts.index",
-                [
-                    "posts" => $posts,
-                    "most_commented" => $mostCommentedBlogPosts,
-                    "most_active" => $mostActive,
-                    "most_active_last_month" => $mostActiveLastMonth,
-                ]
+                        [
+                            "posts" => $posts,
+                            "most_commented" => $mostCommentedBlogPosts,
+                            "most_active" => $mostActive,
+                            "most_active_last_month" => $mostActiveLastMonth,
+                        ]
             );
         }
 
@@ -62,7 +62,7 @@
             return view("posts.create");
         }
 
-        public function store(StoreBlogPost $request)
+        public function store(StoreBlogPost $request): RedirectResponse
         {
             $validatedData = $request->validated();
 
@@ -72,7 +72,7 @@
 
             if ($request->hasFile("thumbnail")) {
                 $path = $request->file("thumbnail")->store("images/posts/thumbnails");
-
+                
                 $post->image()->save(
                     Image::make(
                         ["path" => $path]
@@ -87,11 +87,14 @@
 
         public function show($id)
         {
-            $post = Cache::remember("blog-post-{$id}", now()->addSeconds(30),
+            $post = Cache::remember(
+                "blog-post-{$id}",
+                now()->addSeconds(30),
                 function () use ($id) {
                     return BlogPost::with("comments", "tags", "user", "comments.user")
                         ->findOrFail($id);
-                });
+                }
+            );
 
             return view("posts.show", [
                 "post" => $post,

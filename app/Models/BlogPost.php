@@ -4,11 +4,11 @@
 
     use App\Scopes\DeletedAdminScope;
     use App\Scopes\LatestScope;
+    use App\Traits\Taggable;
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Database\Eloquent\Relations\BelongsTo;
-    use Illuminate\Database\Eloquent\Relations\BelongsToMany;
     use Illuminate\Database\Eloquent\Relations\MorphMany;
     use Illuminate\Database\Eloquent\Relations\MorphOne;
     use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,7 +16,7 @@
 
     class BlogPost extends Model
     {
-        use HasFactory, SoftDeletes;
+        use HasFactory, SoftDeletes, Taggable;
 
         protected $fillable = ["title", "content", "user_id", "imageable_id"];
 
@@ -47,11 +47,6 @@
         public function comments(): MorphMany
         {
             return $this->morphMany(Comment::class, "commentable")->latest();
-        }
-
-        public function tags(): BelongsToMany
-        {
-            return $this->belongsToMany(Tag::class)->withTimestamps();
         }
 
         public function image(): MorphOne

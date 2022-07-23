@@ -1,6 +1,6 @@
 @extends("layouts.app")
 @section("content")
-    <div class="d-flex">
+    <div class="">
         <div class="col-md">
             <h1>
                 Welcome to your dashboard, {{ auth()->user()->first_name }}.
@@ -8,29 +8,28 @@
             <div class="col-md">
                 <img src="{{ \Illuminate\Support\Facades\Auth::user()->avatar }}" alt="">
             </div>
-            <?php echo \Illuminate\Support\Facades\Auth::user(); ?>
+            <!--            --><?php echo \Illuminate\Support\Facades\Auth::user(); ?>
         </div>
     </div>
     <hr/>
-    <div class="row">
-        <ul class="nav justify-content-center my-5 col-md8 mx-auto">
-            <li class="nav-item">
-                <a class="nav-link btn btn-primary btn-sm" href="#">Posts</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link btn btn-primary btn-sm" href="#">Tags</a>
-            </li>
-            <li class="nav-item">
-                <a role="button" class="nav-link btn btn-success btn-sm" href="{{ route("posts.create") }}">
-                    Create A Post</a>
-            </li>
-            <li class="nav-item">
-                <a role="button" class="nav-link btn btn-success btn-sm"
-                   href="{{ route("users.show", auth()->user()->id) }}">
-                    My Profile</a>
-            </li>
-        </ul>
-        <div class="col-sm">
+    <div class="d-flex">
+        <div class="">
+            <ul class="nav justify-content-center my-5 col-md8 mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary btn-sm" href="{{ route('posts.index') }}">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a role="button" class="nav-link btn btn-success btn-sm" href="{{ route("posts.create") }}">
+                        Create A Post</a>
+                </li>
+                <li class="nav-item">
+                    <a role="button" class="nav-link btn btn-success btn-sm"
+                       href="{{ route("users.show", auth()->user()->id) }}">
+                        My Profile</a>
+                </li>
+            </ul>
+        </div>
+        <div class="">
             @if($posts->count() > 0)
                 <table class="table">
                     <thead>
@@ -48,8 +47,8 @@
 
                     </tr>
                     </thead>
+                    <tbody>
                     @foreach($posts as $post)
-                        <tbody>
                         <tr>
                             <th scope="row">{{ $post->id }}</th>
                             @if($post->trashed())
@@ -80,8 +79,8 @@
                             @endif
                             {{--                            @endcan--}}
                         </tr>
-                        </tbody>
                     @endforeach
+                    </tbody>
                 </table>
     @endif
 @endsection

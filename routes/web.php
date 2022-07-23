@@ -20,7 +20,7 @@
     })->middleware(["auth"])->name("dashboard");
 
     Route::resource("posts", PostController::class);
-
+    
     Route::get("/posts/tag/{tag}", [PostTagController::class, "index"])->name("posts.tags.index");
 
     Route::resource("posts.comments", PostCommentController::class)->only(["store"]);
@@ -31,6 +31,11 @@
 
     Route::get("/restore-post/{id}", [PostController::class, "restore"])->name("posts.restore");
 
+    Route::get("mailable", function () {
+        $comment = \App\Models\Comment::find(1);
+
+        return new \App\Mail\CommentPosted($comment);
+    });
 
     require __DIR__."/auth.php";
 
