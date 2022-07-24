@@ -46,6 +46,8 @@
          */
         public function deleting(BlogPost $blogPost)
         {
+            dd("deleting");
+            
             $blogPost->comments()->delete();
         }
 
